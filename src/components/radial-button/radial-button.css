@@ -1,0 +1,25 @@
+:host {
+  width: 5rem;
+  height: 5rem;
+  background-color: black;
+  border-radius: 100rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 60%;
+}
+
+:host([selected]) {
+  box-shadow: 0 0 0 4px #296FBD;
+  opacity: 100%;
+}
+
+.title {
+  color: white;
+  font-size: 0.6rem;
+  text-align: center;
+  user-select: none;
+  pointer-events: none;
+  overflow: hidden;
+  padding: 0.25rem;
+}

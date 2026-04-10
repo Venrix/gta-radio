@@ -1,0 +1,72 @@
+@import url('@fontsource-variable/inter/index.css');
+
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  margin: 0;
+  background-color: rgb(31, 31, 31);
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font: 400 1rem/1.5 'Inter Variable', sans-serif;
+  position: relative;
+  overflow: hidden;
+}
+
+body::before {
+  content: '';
+  position: absolute;
+  inset: -20px;
+  background-image: url('./assets/background/bg.png');
+  background-size: cover;
+  background-position: center;
+  filter: blur(3px);
+  z-index: -1;
+}
+
+#hud {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  width: min(32rem, calc(100vw - 2rem));
+  text-align: center;
+  pointer-events: none;
+  user-select: none;
+}
+
+#hud-station {
+  color: white;
+  font-size: 1.25rem;
+  font-weight: 600;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.8);
+}
+
+#hud-hint {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.75rem;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+}
+
+#hud-volume {
+  color: white;
+  font-size: 0.8rem;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+#hud-volume.visible {
+  opacity: 1;
+}
