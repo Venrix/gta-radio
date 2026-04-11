@@ -16,9 +16,14 @@ const timestamps = new Map<string, number>();
 
 let player: YT.Player | null = null;
 let currentUrl: string | null = null;
-let volume = 50;
+let volume = Number(localStorage.getItem('volume') ?? 50);
+let endedCallback: ((url: string) => void) | null = null;
 
-function extractVideoId(url: string): string | null {
+export function onStationEnded(cb: (url: string) => void): void {
+  endedCallback = cb;
+}
+
+export function extractVideoId(url: string): string | null {
   const match = url.match(/[?&]v=([^&]+)/);
   return match ? match[1] : null;
 }
@@ -36,6 +41,11 @@ const playerReady = new Promise<YT.Player>((resolve) => {
           player!.setVolume(volume);
           resolve(player!);
         },
+        onStateChange: ({ data }) => {
+          if (data === YT.PlayerState.ENDED && currentUrl) {
+            endedCallback?.(currentUrl);
+          }
+        },
       },
     });
   };
@@ -45,7 +55,7 @@ const script = document.createElement('script');
 script.src = 'https://www.youtube.com/iframe_api';
 document.head.appendChild(script);
 
-export async function play(url: string): Promise<void> {
+export async function play(url: string, startSeconds?: number): Promise<void> {
   const videoId = extractVideoId(url);
   if (!videoId) return;
 
@@ -56,13 +66,14 @@ export async function play(url: string): Promise<void> {
   }
 
   currentUrl = url;
-  const startSeconds = timestamps.get(url) ?? 0;
+  const offset = startSeconds ?? timestamps.get(url) ?? 0;
   await playRandomBlip();
-  p.loadVideoById({ videoId, startSeconds });
+  p.loadVideoById({ videoId, startSeconds: offset });
 }
 
 export function setVolume(v: number): void {
   volume = Math.max(0, Math.min(100, Math.round(v)));
+  localStorage.setItem('volume', String(volume));
   player?.setVolume(volume);
 }
 

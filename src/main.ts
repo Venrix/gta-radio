@@ -2,11 +2,13 @@ import './style.css';
 import './components/radial-menu/radial-menu.js';
 import './components/radial-button/radial-button.js';
 import { stations } from './stations.js';
-import { play, stop, setVolume, getVolume } from './player.js';
+import { play, stop, setVolume, getVolume, onStationEnded } from './player.js';
 import {
   start as startVisualizer,
   stop as stopVisualizer
 } from './visualizer.js';
+
+const EPOCH = 1700000000000;
 
 const DEBUG = false;
 
@@ -48,7 +50,9 @@ menu.addEventListener('activate', (e) => {
   const url = el.getAttribute('data-url');
   const title = el.getAttribute('title') ?? 'Unknown';
   if (url) {
-    play(url);
+    const station = stations.find((s) => s.url === url);
+    const offset = station ? ((Date.now() - EPOCH) % (station.duration * 60 * 1000)) / 1000 : 0;
+    play(url, offset);
     startVisualizer();
     hudStation.textContent = title;
   } else {
@@ -56,6 +60,13 @@ menu.addEventListener('activate', (e) => {
     stopVisualizer();
     hudStation.textContent = 'No Station';
   }
+});
+
+onStationEnded((url) => {
+  const station = stations.find((s) => s.url === url);
+  if (!station) return;
+  const offset = ((Date.now() - EPOCH) % (station.duration * 60 * 1000)) / 1000;
+  play(url, offset);
 });
 
 if (!DEBUG) {
