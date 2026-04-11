@@ -18,17 +18,9 @@ body {
   font: 400 1rem/1.5 'Inter Variable', sans-serif;
   position: relative;
   overflow: hidden;
-}
-
-body::before {
-  content: '';
-  position: absolute;
-  inset: -20px;
-  background-image: url('./assets/background/bg.png');
+  background-image: url('./assets/background/bg.jpg');
   background-size: cover;
   background-position: center;
-  filter: blur(3px);
-  z-index: -1;
 }
 
 #hud {
