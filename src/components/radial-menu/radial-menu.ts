@@ -23,7 +23,7 @@ export class RadialMenu extends HTMLElement {
 
   readonly #resizeObserver = new ResizeObserver(() => this.#arrange());
 
-  #hoverDelay = 1.5;
+  #hoverDelay = 8;
 
   #deadzone = 0.18;
 
