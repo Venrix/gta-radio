@@ -10,6 +10,11 @@
   cursor: pointer;
 }
 
+:host(:hover) {
+  opacity: 85%;
+  outline: 1px solid #296FBD;
+}
+
 :host([selected]) {
   box-shadow: 0 0 0 4px #296FBD;
   opacity: 100%;
