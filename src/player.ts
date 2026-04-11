@@ -1,15 +1,21 @@
 const blipUrls = Object.values(
-  import.meta.glob<string>('./assets/sounds/radio_blip_*.wav', { eager: true, query: '?url', import: 'default' })
-);
+  import.meta.glob('./assets/sounds/radio_blip_*.wav', { eager: true, query: '?url', import: 'default' })
+) as string[];
 
 function playRandomBlip(): Promise<void> {
   const url = blipUrls[Math.floor(Math.random() * blipUrls.length)];
   const audio = new Audio(url);
   return new Promise((resolve) => {
-    audio.addEventListener('ended', resolve, { once: true });
-    audio.addEventListener('error', resolve, { once: true });
-    audio.play().catch(resolve);
+    audio.addEventListener('ended', () => resolve(), { once: true });
+    audio.addEventListener('error', () => resolve(), { once: true });
+    audio.play().catch(() => resolve());
   });
+}
+
+declare global {
+  interface Window {
+    onYouTubeIframeAPIReady: () => void;
+  }
 }
 
 const timestamps = new Map<string, number>();
