@@ -48,17 +48,17 @@ export class RadialMenu extends HTMLElement {
     }
     this.#slot.addEventListener('slotchange', this.#arrange);
     this.#resizeObserver.observe(this);
-    document.addEventListener('mousemove', this.#handleHover);
+    document.addEventListener('pointermove', this.#handleHover);
   }
 
   disconnectedCallback(): void {
     this.querySelector('[data-radio-off]')?.remove();
     this.#slot.removeEventListener('slotchange', this.#arrange);
     this.#resizeObserver.disconnect();
-    document.removeEventListener('mousemove', this.#handleHover);
+    document.removeEventListener('pointermove', this.#handleHover);
   }
 
-  readonly #handleHover = (e: MouseEvent): void => {
+  readonly #handleHover = (e: PointerEvent): void => {
     if (!this.checkVisibility()) return;
 
     const items = this.#slot.assignedElements();
