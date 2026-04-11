@@ -7,6 +7,7 @@
   align-items: center;
   justify-content: center;
   opacity: 60%;
+  cursor: pointer;
 }
 
 :host([selected]) {

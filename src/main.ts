@@ -28,7 +28,7 @@ const hudHint = document.getElementById('hud-hint')!;
 
 const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 hudHint.textContent = isTouchDevice
-  ? 'Long-press to switch Radio  ·  Two-finger swipe to adjust volume'
+  ? 'Tap station name to switch Radio  ·  Two-finger swipe to adjust volume'
   : 'Hold Q to switch Radio  ·  Scroll to adjust volume';
 
 hudVolume.textContent = `Volume: ${getVolume()}%`;
@@ -118,55 +118,48 @@ onStationEnded((url) => {
 if (!DEBUG) {
   menu.style.display = 'none';
 
-  // Prevent native context menu on long-press (mobile)
-  document.addEventListener('contextmenu', (e) => e.preventDefault());
-
+  // ── Desktop: hold Q (hover mode) ──
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'q' && !e.repeat) menu.style.display = '';
+    if (e.key === 'q' && !e.repeat) {
+      menu.setAttribute('mode', 'hover');
+      menu.style.display = '';
+    }
   });
 
   document.addEventListener('keyup', (e) => {
     if (e.key === 'q') menu.style.display = 'none';
   });
 
-  let longPressTimer: ReturnType<typeof setTimeout> | null = null;
-  let touchStartX = 0;
-  let touchStartY = 0;
-  const LONG_PRESS_MOVE_THRESHOLD = 15; // px – ignore small finger jitter
-
-  document.addEventListener('pointerdown', (e) => {
-    if (e.pointerType !== 'touch') return;
-    touchStartX = e.clientX;
-    touchStartY = e.clientY;
-    longPressTimer = setTimeout(() => {
-      longPressTimer = null;
+  // ── Click mode: tap station name to toggle wheel ──
+  hudStation.addEventListener('click', () => {
+    const isOpen = menu.style.display !== 'none';
+    if (isOpen) {
+      menu.style.display = 'none';
+    } else {
+      menu.setAttribute('mode', 'click');
       menu.style.display = '';
-    }, 300);
-  });
-
-  const cancelLongPress = () => {
-    if (longPressTimer === null) return;
-    clearTimeout(longPressTimer);
-    longPressTimer = null;
-  };
-
-  document.addEventListener('pointermove', (e) => {
-    if (e.pointerType !== 'touch') return;
-    // Only cancel the long-press timer if the finger moved far enough
-    const dx = e.clientX - touchStartX;
-    const dy = e.clientY - touchStartY;
-    if (dx * dx + dy * dy > LONG_PRESS_MOVE_THRESHOLD * LONG_PRESS_MOVE_THRESHOLD) {
-      cancelLongPress();
     }
   });
-  document.addEventListener('pointerup', (e) => {
-    if (e.pointerType !== 'touch') return;
-    cancelLongPress();
-    menu.style.display = 'none';
+
+  // Close menu after a station is activated (click mode only)
+  menu.addEventListener('activate', () => {
+    if (menu.getAttribute('mode') === 'click') {
+      menu.style.display = 'none';
+    }
   });
-  document.addEventListener('pointercancel', (e) => {
-    if (e.pointerType !== 'touch') return;
-    cancelLongPress();
-    menu.style.display = 'none';
-  });
+
+  // ── Click-mode: direct tap on station buttons ──
+  for (const btn of menu.querySelectorAll('radial-button')) {
+    btn.addEventListener('click', () => {
+      if (menu.getAttribute('mode') !== 'click') return;
+      // Highlight the tapped button
+      for (const b of menu.querySelectorAll('radial-button')) b.removeAttribute('selected');
+      btn.setAttribute('selected', '');
+      // Fire activation
+      menu.dispatchEvent(new CustomEvent('activate', {
+        detail: { element: btn },
+        bubbles: true,
+      }));
+    });
+  }
 }

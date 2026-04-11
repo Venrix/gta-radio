@@ -51,6 +51,15 @@ body::before {
   font-size: 1.25rem;
   font-weight: 600;
   text-shadow: 0 1px 6px rgba(0, 0, 0, 0.8);
+  pointer-events: auto;
+  cursor: pointer;
+  padding: 0.25rem 1rem;
+  border-radius: 0.5rem;
+  transition: background-color 0.2s;
+}
+
+#hud-station:active {
+  background-color: rgba(255, 255, 255, 0.1);
 }
 
 #hud-hint {

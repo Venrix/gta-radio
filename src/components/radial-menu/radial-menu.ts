@@ -60,6 +60,7 @@ export class RadialMenu extends HTMLElement {
 
   readonly #handleHover = (e: PointerEvent): void => {
     if (!this.checkVisibility()) return;
+    if (this.getAttribute('mode') === 'click') return;
 
     const items = this.#slot.assignedElements();
     if (items.length === 0) return;
