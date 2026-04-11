@@ -24,9 +24,14 @@ let player: YT.Player | null = null;
 let currentUrl: string | null = null;
 let volume = Number(localStorage.getItem('volume') ?? 50);
 let endedCallback: ((url: string) => void) | null = null;
+let playingCallback: (() => void) | null = null;
 
 export function onStationEnded(cb: (url: string) => void): void {
   endedCallback = cb;
+}
+
+export function onStationPlaying(cb: () => void): void {
+  playingCallback = cb;
 }
 
 export function extractVideoId(url: string): string | null {
@@ -48,6 +53,9 @@ const playerReady = new Promise<YT.Player>((resolve) => {
           resolve(player!);
         },
         onStateChange: ({ data }) => {
+          if (data === YT.PlayerState.PLAYING) {
+            playingCallback?.();
+          }
           if (data === YT.PlayerState.ENDED && currentUrl) {
             endedCallback?.(currentUrl);
           }

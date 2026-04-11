@@ -2,7 +2,7 @@ import './style.css';
 import './components/radial-menu/radial-menu.js';
 import './components/radial-button/radial-button.js';
 import { stations } from './stations.js';
-import { play, stop, setVolume, getVolume, onStationEnded } from './player.js';
+import { play, stop, setVolume, getVolume, onStationEnded, onStationPlaying } from './player.js';
 import {
   start as startVisualizer,
   stop as stopVisualizer
@@ -91,6 +91,16 @@ document.addEventListener('touchend', () => {
   }, 1500);
 }, { passive: true });
 
+let pendingTitle: string | null = null;
+
+onStationPlaying(() => {
+  if (pendingTitle !== null) {
+    hudStation.textContent = pendingTitle;
+    pendingTitle = null;
+    startVisualizer();
+  }
+});
+
 menu.addEventListener('activate', (e) => {
   const el = (e as CustomEvent<{ element: Element }>).detail.element;
   const url = el.getAttribute('data-url');
@@ -98,10 +108,12 @@ menu.addEventListener('activate', (e) => {
   if (url) {
     const station = stations.find((s) => s.url === url);
     const offset = station ? ((Date.now() - EPOCH) % (station.duration * 60 * 1000)) / 1000 : 0;
+    pendingTitle = title;
+    hudStation.textContent = 'Loading...';
+    stopVisualizer();
     play(url, offset);
-    startVisualizer();
-    hudStation.textContent = title;
   } else {
+    pendingTitle = null;
     stop();
     stopVisualizer();
     hudStation.textContent = 'No Station';
