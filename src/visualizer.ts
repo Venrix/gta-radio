@@ -20,18 +20,80 @@ let startTime = 0;
 let opacity = 0;
 let targetOpacity = 0;
 
-// Simulate a frequency spectrum using overlapping sine waves at different rates.
-// Each bar gets a unique combination so adjacent bars move somewhat independently.
+const PERM = new Uint8Array(512);
+{
+  const p = new Uint8Array(256);
+  for (let i = 0; i < 256; i++) p[i] = i;
+  for (let i = 255; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [p[i], p[j]] = [p[j], p[i]];
+  }
+  PERM.set(p);
+  PERM.set(p, 256);
+}
+
+function fade(t: number) {
+  return t * t * t * (t * (t * 6 - 15) + 10);
+}
+
+function grad(hash: number, x: number): number {
+  return hash & 1 ? -x : x;
+}
+
+function noise1d(x: number): number {
+  const xi = Math.floor(x) & 255;
+  const xf = x - Math.floor(x);
+  const u = fade(xf);
+  return (1 - u) * grad(PERM[xi], xf) + u * grad(PERM[xi + 1], xf - 1);
+}
+
+function fbm(x: number, octaves: number): number {
+  let v = 0;
+  let amp = 1;
+  let freq = 1;
+  let max = 0;
+  for (let i = 0; i < octaves; i++) {
+    v += noise1d(x * freq) * amp;
+    max += amp;
+    amp *= 0.5;
+    freq *= 2;
+  }
+  return v / max;
+}
+
+function kick(t: number, bpm: number): number {
+  const beatSec = 60 / bpm;
+  const phase = (t % beatSec) / beatSec;
+  return Math.exp(-phase * 4) * 0.7;
+}
+
+function beatEnvelope(t: number): number {
+  return (
+    kick(t, 100) * 0.30 +
+    kick(t + 0.13, 128) * 0.25 +
+    kick(t + 0.07, 87) * 0.20 +
+    kick(t + 0.31, 140) * 0.10
+  );
+}
+
 function getBarValue(i: number, t: number): number {
   const p = i / NUM_BARS;
-  const v =
-    Math.sin(t * 2.4 + p * 18.1) * 0.25 +
-    Math.sin(t * 1.3 + p * 7.3) * 0.2 +
-    Math.sin(t * 3.9 + p * 31.4) * 0.15 +
-    Math.sin(t * 0.9 + p * 4.7) * 0.2 +
-    // bass bump: taller bars toward i=0
-    Math.exp(-p * 5) * Math.abs(Math.sin(t * 2.8)) * 0.2;
-  return Math.max(0, v * 0.5 + 0.5);
+
+  const n =
+    fbm(p * 4.0 + t * 0.8, 4) * 0.25 +
+    fbm(p * 8.0 - t * 0.5, 3) * 0.15;
+
+  const bass = Math.exp(-p * 4) * 0.20;
+
+  const beat = beatEnvelope(t) * (0.18 + bass * 0.5);
+
+  const treble =
+    p > 0.5
+      ? Math.abs(noise1d(p * 20 + t * 2.5)) * 0.10 * (p - 0.5) * 2
+      : 0;
+
+  const raw = 0.30 + n + bass + beat + treble;
+  return Math.max(0, Math.min(1, raw));
 }
 
 function draw(ts: number) {
@@ -48,7 +110,7 @@ function draw(ts: number) {
     const cy = h / 2;
     const minDim = Math.min(w, h);
     const innerR = minDim * VISUALIZER_RADIUS;
-    const maxBarLen = minDim * 0.07;
+    const maxBarLen = minDim * 0.10;
 
     for (let i = 0; i < NUM_BARS; i++) {
       const angle = (i / NUM_BARS) * Math.PI * 2 - Math.PI / 2;
