@@ -79,4 +79,32 @@ if (!DEBUG) {
   document.addEventListener('keyup', (e) => {
     if (e.key === 'q') menu.style.display = 'none';
   });
+
+  let longPressTimer: ReturnType<typeof setTimeout> | null = null;
+
+  document.addEventListener('pointerdown', (e) => {
+    if (e.pointerType !== 'touch') return;
+    longPressTimer = setTimeout(() => {
+      longPressTimer = null;
+      menu.style.display = '';
+    }, 300);
+  });
+
+  const cancelLongPress = () => {
+    if (longPressTimer === null) return;
+    clearTimeout(longPressTimer);
+    longPressTimer = null;
+  };
+
+  document.addEventListener('pointermove', cancelLongPress);
+  document.addEventListener('pointerup', (e) => {
+    if (e.pointerType !== 'touch') return;
+    cancelLongPress();
+    menu.style.display = 'none';
+  });
+  document.addEventListener('pointercancel', (e) => {
+    if (e.pointerType !== 'touch') return;
+    cancelLongPress();
+    menu.style.display = 'none';
+  });
 }
