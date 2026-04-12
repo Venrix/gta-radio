@@ -9,6 +9,7 @@ const blipUrls = Object.values(
 function playRandomBlip(): Promise<void> {
   const url = blipUrls[Math.floor(Math.random() * blipUrls.length)];
   const audio = new Audio(url);
+  audio.volume = volume / 100;
   return new Promise((resolve) => {
     audio.addEventListener('ended', () => resolve(), { once: true });
     audio.addEventListener('error', () => resolve(), { once: true });
