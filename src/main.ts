@@ -175,35 +175,34 @@ onStationEnded((url) => {
 });
 
 if (!DEBUG) {
-  menu.style.display = 'none';
+  menu.classList.add('hidden');
 
   // ── Desktop: hold Q (hover mode) ──
   document.addEventListener('keydown', (e) => {
     if (e.key === 'q' && !e.repeat) {
       menu.setAttribute('mode', 'hover');
-      menu.style.display = '';
+      menu.classList.remove('hidden');
     }
   });
 
   document.addEventListener('keyup', (e) => {
-    if (e.key === 'q') menu.style.display = 'none';
+    if (e.key === 'q') menu.classList.add('hidden');
   });
 
   // ── Click mode: tap station name to toggle wheel ──
   hudStation.addEventListener('click', () => {
-    const isOpen = menu.style.display !== 'none';
-    if (isOpen) {
-      menu.style.display = 'none';
-    } else {
+    if (menu.classList.contains('hidden')) {
       menu.setAttribute('mode', 'click');
-      menu.style.display = '';
+      menu.classList.remove('hidden');
+    } else {
+      menu.classList.add('hidden');
     }
   });
 
   // Close menu after a station is activated (click mode only)
   menu.addEventListener('activate', () => {
     if (menu.getAttribute('mode') === 'click') {
-      menu.style.display = 'none';
+      menu.classList.add('hidden');
     }
   });
 
