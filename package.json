@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "format": "prettier --write --list-different ."
+    "format": "npx prettier --write --list-different ."
   },
   "devDependencies": {
     "@types/youtube": "^0.1.2",
