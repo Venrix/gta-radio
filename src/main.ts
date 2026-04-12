@@ -28,6 +28,7 @@ for (const station of stations) {
   const button = document.createElement('radial-button');
   button.setAttribute('title', station.title);
   button.setAttribute('data-url', station.url);
+  button.setAttribute('data-id', station.id);
   button.setAttribute('icon', station.icon);
   menu.appendChild(button);
 }
@@ -136,25 +137,33 @@ onStationError(() => {
   }
 });
 
+function playStation(station: (typeof stations)[number]): void {
+  const offset =
+    ((Date.now() - EPOCH) % (station.duration * 60 * 1000)) / 1000;
+  pendingTitle = station.title;
+  hudStation.classList.remove('error');
+  hudStation.textContent = 'Loading...';
+  stopVisualizer();
+  play(station.url, offset);
+}
+
+function stopStation(): void {
+  pendingTitle = null;
+  stop();
+  stopVisualizer();
+  hudStation.textContent = 'No Station';
+}
+
 menu.addEventListener('activate', (e) => {
   const el = (e as CustomEvent<{ element: Element }>).detail.element;
-  const url = el.getAttribute('data-url');
-  const title = el.getAttribute('title') ?? 'Unknown';
-  if (url) {
-    const station = stations.find((s) => s.url === url);
-    const offset = station
-      ? ((Date.now() - EPOCH) % (station.duration * 60 * 1000)) / 1000
-      : 0;
-    pendingTitle = title;
-    hudStation.classList.remove('error');
-    hudStation.textContent = 'Loading...';
-    stopVisualizer();
-    play(url, offset);
+  const id = el.getAttribute('data-id');
+  const station = id ? stations.find((s) => s.id === id) : null;
+  if (station) {
+    playStation(station);
+    history.pushState(null, '', `/${station.id}`);
   } else {
-    pendingTitle = null;
-    stop();
-    stopVisualizer();
-    hudStation.textContent = 'No Station';
+    stopStation();
+    history.pushState(null, '', '/');
   }
 });
 
@@ -215,4 +224,36 @@ if (!DEBUG) {
       );
     });
   }
+}
+
+// ── URL routing ──
+window.addEventListener('popstate', () => {
+  const id = location.pathname.slice(1);
+  const station = id ? stations.find((s) => s.id === id) : null;
+  if (station) {
+    playStation(station);
+  } else {
+    stopStation();
+  }
+});
+
+// Auto-play station from URL on initial load
+const initialId = location.pathname.slice(1);
+const initialStation = initialId
+  ? stations.find((s) => s.id === initialId)
+  : null;
+if (initialStation) {
+  hudStation.textContent = initialStation.title;
+  hudHint.textContent = 'Click anywhere to start listening';
+  const overlay = document.createElement('div');
+  overlay.id = 'click-to-play';
+  document.body.appendChild(overlay);
+  const startOnInteraction = () => {
+    overlay.remove();
+    hudHint.textContent = isTouchDevice
+      ? 'Tap station name to switch Radio  ·  Two-finger swipe to adjust volume'
+      : 'Hold Q to switch Radio  ·  Scroll to adjust volume';
+    playStation(initialStation);
+  };
+  overlay.addEventListener('click', startOnInteraction, { once: true });
 }

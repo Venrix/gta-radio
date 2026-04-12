@@ -89,3 +89,10 @@ body {
 #hud-volume.visible {
   opacity: 1;
 }
+
+#click-to-play {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  cursor: pointer;
+}
