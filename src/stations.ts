@@ -1,6 +1,13 @@
+const iconModules = import.meta.glob('./assets/station_icons/*.jpg', {
+  eager: true,
+  query: '?url',
+  import: 'default'
+}) as Record<string, string>;
+
 export interface Station {
   guid: string;
   title: string;
+  icon: string;
   url: string;
   disabled: boolean;
   duration: number;
@@ -10,6 +17,7 @@ export const stations: Station[] = [
   {
     guid: '94ab8125-45fd-462d-b801-5762b4c438bd',
     title: 'Blue Ark',
+    icon: '/assets/station_icons/blue_ark.jpg',
     duration: 135.57,
     url: 'https://www.youtube.com/watch?v=LRdjhqMYSGg',
     disabled: false
@@ -17,6 +25,7 @@ export const stations: Station[] = [
   {
     guid: 'd9e5a65c-10c3-431d-af60-24f0398f2a8c',
     title: 'Music Locker Radio',
+    icon: '/assets/station_icons/music_locker_radio.jpg',
     duration: 454.1,
     url: 'https://www.youtube.com/watch?v=dBvMBYbUZFc',
     disabled: false
@@ -24,6 +33,7 @@ export const stations: Station[] = [
   {
     guid: '3892e453-c63d-4be7-b6de-4d619b73930e',
     title: 'Worldwide FM',
+    icon: '/assets/station_icons/worldwide_fm.jpg',
     duration: 307.72,
     url: 'https://www.youtube.com/watch?v=GgIB2WClkwY',
     disabled: false
@@ -31,6 +41,7 @@ export const stations: Station[] = [
   {
     guid: '07d30465-ab4b-4545-b85f-e0559680f456',
     title: 'FlyLo FM',
+    icon: '/assets/station_icons/flylo_fm.jpg',
     duration: 129.5,
     url: 'https://www.youtube.com/watch?v=3P-ux63rHkU',
     disabled: false
@@ -38,6 +49,7 @@ export const stations: Station[] = [
   {
     guid: 'a8211136-bf66-4ef9-a823-6905616fc459',
     title: 'The Lowdown 91.1',
+    icon: '/assets/station_icons/the_lowdown_91.1.jpg',
     duration: 142.33,
     url: 'https://www.youtube.com/watch?v=RT9h-C24idQ',
     disabled: false
@@ -45,6 +57,7 @@ export const stations: Station[] = [
   {
     guid: '43886cc2-c7ef-4810-86db-0040df2f1d00',
     title: 'The Lab',
+    icon: '/assets/station_icons/the_lab.jpg',
     duration: 57.62,
     url: 'https://www.youtube.com/watch?v=Xy75nA56vcc',
     disabled: false
@@ -52,6 +65,7 @@ export const stations: Station[] = [
   {
     guid: '9ed85702-f447-43f2-95ab-a7c9e782d428',
     title: 'Radio Mirror Park',
+    icon: '/assets/station_icons/radio_mirror_park.jpg',
     duration: 212.9,
     url: 'https://www.youtube.com/watch?v=SDWHIACuuaQ',
     disabled: false
@@ -59,6 +73,7 @@ export const stations: Station[] = [
   {
     guid: '69742d94-aac0-4c3a-bae3-3f101c38b6ec',
     title: 'Kult FM',
+    icon: '/assets/station_icons/kult_fm.jpg',
     duration: 140.2,
     url: 'https://www.youtube.com/watch?v=9cL6IDCtuzs',
     disabled: false
@@ -66,6 +81,7 @@ export const stations: Station[] = [
   {
     guid: 'b3050110-68de-4f5b-acd6-07cce7267e3c',
     title: 'Space 103.2',
+    icon: '/assets/station_icons/space_103.2.jpg',
     duration: 188.32,
     url: 'https://www.youtube.com/watch?v=6TnV43UWoqk',
     disabled: false
@@ -73,6 +89,7 @@ export const stations: Station[] = [
   {
     guid: '1a555634-8130-4acd-bf8f-fda261789b79',
     title: 'Vinewood Boulevard Radio',
+    icon: '/assets/station_icons/vinewood_boulevard_radio.jpg',
     duration: 92.28,
     url: 'https://www.youtube.com/watch?v=5fnGyUc2eFs',
     disabled: false
@@ -80,6 +97,7 @@ export const stations: Station[] = [
   {
     guid: '0e7e0e80-f95d-45f3-b20b-b3f75d3ca61e',
     title: 'blonded Los Santos 97.8 FM',
+    icon: '/assets/station_icons/blonded_los_santos_97.8_fm.jpg',
     duration: 102.33,
     url: 'https://www.youtube.com/watch?v=-tVumJBaTWY',
     disabled: false
@@ -87,6 +105,7 @@ export const stations: Station[] = [
   {
     guid: '2b1d77a8-f6d7-499e-9dc9-497247ebae30',
     title: 'Los Santos Underground Radio',
+    icon: '/assets/station_icons/los_santos_underground_radio.jpg',
     duration: 278.92,
     url: 'https://www.youtube.com/watch?v=I2Xjuz-mnN0',
     disabled: false
@@ -94,6 +113,7 @@ export const stations: Station[] = [
   {
     guid: 'a453d7f1-f2f8-41b4-8db0-728e9e6e1048',
     title: 'iFruit Radio',
+    icon: '/assets/station_icons/ifruit_radio.jpg',
     duration: 86.7,
     url: 'https://www.youtube.com/watch?v=fpvJaphZ2_g',
     disabled: false
@@ -101,6 +121,7 @@ export const stations: Station[] = [
   {
     guid: 'ca6a1797-e00f-4732-afde-5be57ebbf5a8',
     title: 'Still Slipping Los Santos',
+    icon: '/assets/station_icons/still_slipping_los_santos.jpg',
     duration: 72.75,
     url: 'https://www.youtube.com/watch?v=P3qixldzDow',
     disabled: false
@@ -108,6 +129,7 @@ export const stations: Station[] = [
   {
     guid: '1f84a498-f3bb-45d0-bf32-2b3addc8c8d5',
     title: 'Los Santos Rock Radio',
+    icon: '/assets/station_icons/los_santos_rock_radio.jpg',
     duration: 287.35,
     url: 'https://www.youtube.com/watch?v=fZPV-9GlM-c',
     disabled: false
@@ -115,6 +137,7 @@ export const stations: Station[] = [
   {
     guid: 'ff2278cb-d9ad-4a5c-bd63-bd72c2d9ba15',
     title: 'Non-Stop-Pop FM',
+    icon: '/assets/station_icons/non-stop-pop_fm.jpg',
     duration: 231.32,
     url: 'https://www.youtube.com/watch?v=Fjp0wu3lEHk',
     disabled: false
@@ -122,6 +145,7 @@ export const stations: Station[] = [
   {
     guid: '7af7f4db-e0a9-45b8-b2d4-b341ec48e50c',
     title: 'Radio Los Santos',
+    icon: '/assets/station_icons/radio_los_santos.jpg',
     duration: 356.42,
     url: 'https://www.youtube.com/watch?v=C3_FSXZtRe8',
     disabled: false
@@ -129,6 +153,7 @@ export const stations: Station[] = [
   {
     guid: '25ec58c3-2a61-4ee7-9d62-845afe68f332',
     title: 'Channel X',
+    icon: '/assets/station_icons/channel_x.jpg',
     duration: 91.83,
     url: 'https://www.youtube.com/watch?v=HHG44PJ0oyo',
     disabled: false
@@ -136,6 +161,7 @@ export const stations: Station[] = [
   {
     guid: '709ecf73-ce50-4e2f-b0fc-1fd355f5259e',
     title: 'Rebel Radio',
+    icon: '/assets/station_icons/rebel_radio.jpg',
     duration: 82.65,
     url: 'https://www.youtube.com/watch?v=HeLsaX1I5B4',
     disabled: false
@@ -143,6 +169,7 @@ export const stations: Station[] = [
   {
     guid: '59afda50-2163-416e-a452-5c34408a2cc4',
     title: 'Soulwax FM',
+    icon: '/assets/station_icons/soulwax_fm.jpg',
     duration: 54.33,
     url: 'https://www.youtube.com/watch?v=EhsQZl8BFz8',
     disabled: false
@@ -150,6 +177,7 @@ export const stations: Station[] = [
   {
     guid: '99f92efd-9fa9-44ce-a8d9-5fc24416eb99',
     title: 'East Los FM',
+    icon: '/assets/station_icons/east_los_fm.jpg',
     duration: 45.05,
     url: 'https://www.youtube.com/watch?v=xTpsoTmhdNc',
     disabled: false
@@ -157,14 +185,15 @@ export const stations: Station[] = [
   {
     guid: 'e7a4f1b5-d26e-4b77-a6ab-e0b37b33c54f',
     title: 'West Coast Classics',
+    icon: '/assets/station_icons/west_coast_classics.jpg',
     duration: 258.55,
     url: 'https://www.youtube.com/watch?v=z0Wf3IuZnf0',
     disabled: false
   },
-
   {
     guid: '9af0cc1d-61d9-4f94-b5fe-c8ea2575d5e4',
     title: 'Media Player',
+    icon: '/assets/station_icons/media_player.jpg',
     duration: 416,
     url: 'https://www.youtube.com/watch?v=dPkzYz-AYOs',
     disabled: false
@@ -172,8 +201,37 @@ export const stations: Station[] = [
   {
     guid: '6a8a3ba8-d099-4f96-a1f0-0f4b712f1736',
     title: 'MOTOMAMI Los Santos',
+    icon: '/assets/station_icons/motomami_los_santos.jpg',
     duration: 196,
     url: 'https://www.youtube.com/watch?v=30uA_Hppzpc',
     disabled: false
+  },
+  {
+    guid: 'd9e5a65c-10c3-431d-af60-24f0398f2a8c',
+    title: 'Blaine County Talk Radio',
+    icon: '/assets/station_icons/blaine_county_talk_radio.jpg',
+    duration: 0,
+    url: '',
+    disabled: true
+  },
+  {
+    guid: '3892e453-c63d-4be7-b6de-4d619b73930e',
+    title: 'Self Radio',
+    icon: '/assets/station_icons/self_radio.jpg',
+    duration: 0,
+    url: '',
+    disabled: true
+  },
+  {
+    guid: '07d30465-ab4b-4545-b85f-e0559680f456',
+    title: 'West Coast Talk Radio',
+    icon: '/assets/station_icons/west_coast_talk_radio.jpg',
+    duration: 0,
+    url: '',
+    disabled: true
   }
 ];
+
+for (const station of stations) {
+  station.icon = iconModules[`.${station.icon}`] ?? station.icon;
+}

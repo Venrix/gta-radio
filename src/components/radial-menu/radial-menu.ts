@@ -1,5 +1,6 @@
 import sheet from './radial-menu.css?inline';
 import selectionUrl from '../../assets/sounds/selection.wav';
+import radioOffIcon from '../../assets/station_icons/no_radio.jpg';
 
 const styles = new CSSStyleSheet();
 styles.replaceSync(sheet);
@@ -44,6 +45,7 @@ export class RadialMenu extends HTMLElement {
       const radioOff = document.createElement('radial-button');
       radioOff.setAttribute('title', 'Radio Off');
       radioOff.setAttribute('data-radio-off', '');
+      radioOff.setAttribute('icon', radioOffIcon);
       radioOff.setAttribute('selected', '');
       this.appendChild(radioOff);
     }

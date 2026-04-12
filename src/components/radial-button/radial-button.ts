@@ -4,7 +4,7 @@ const styles = new CSSStyleSheet();
 styles.replaceSync(sheet);
 
 export class RadialButton extends HTMLElement {
-  static observedAttributes: string[] = ['title'];
+  static observedAttributes: string[] = ['title', 'icon'];
 
   readonly #shadow: ShadowRoot;
   readonly #label: HTMLSpanElement;
@@ -21,6 +21,7 @@ export class RadialButton extends HTMLElement {
 
   connectedCallback(): void {
     this.#label.textContent = this.getAttribute('title') ?? '';
+    this.#loadIcon(this.getAttribute('icon'));
   }
 
   disconnectedCallback(): void {}
@@ -32,7 +33,27 @@ export class RadialButton extends HTMLElement {
   ): void {
     if (name === 'title') {
       this.#label.textContent = next ?? '';
+    } else if (name === 'icon') {
+      this.#loadIcon(next);
     }
+  }
+
+  #loadIcon(src: string | null): void {
+    if (!src) {
+      this.style.backgroundImage = '';
+      this.classList.remove('has-icon');
+      return;
+    }
+    const img = new Image();
+    img.onload = () => {
+      this.style.backgroundImage = `url(${src})`;
+      this.classList.add('has-icon');
+    };
+    img.onerror = () => {
+      this.style.backgroundImage = '';
+      this.classList.remove('has-icon');
+    };
+    img.src = src;
   }
 }
 

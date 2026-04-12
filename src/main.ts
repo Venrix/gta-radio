@@ -28,6 +28,7 @@ for (const station of stations) {
   const button = document.createElement('radial-button');
   button.setAttribute('title', station.title);
   button.setAttribute('data-url', station.url);
+  button.setAttribute('icon', station.icon);
   menu.appendChild(button);
 }
 
