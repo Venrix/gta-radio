@@ -19,6 +19,11 @@ let rafId: number | null = null;
 let startTime = 0;
 let opacity = 0;
 let targetOpacity = 0;
+let volumeScale = 0.5; // 0 → 1, driven by player volume
+
+export function setVolumeScale(v: number): void {
+  volumeScale = Math.max(0, Math.min(1, v));
+}
 
 const PERM = new Uint8Array(512);
 {
@@ -89,7 +94,9 @@ function getBarValue(i: number, t: number): number {
     p > 0.5 ? Math.abs(noise1d(p * 20 + t * 2.5)) * 0.1 * (p - 0.5) * 2 : 0;
 
   const raw = 0.3 + n + bass + beat + treble;
-  return Math.max(0, Math.min(1, raw));
+  // Scale intensity by current volume (keep a small minimum so bars don't vanish at 0)
+  const scaled = raw * (0.15 + volumeScale * 0.85);
+  return Math.max(0, Math.min(1, scaled));
 }
 
 function draw(ts: number) {

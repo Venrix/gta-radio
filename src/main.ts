@@ -12,7 +12,8 @@ import {
 } from './player.js';
 import {
   start as startVisualizer,
-  stop as stopVisualizer
+  stop as stopVisualizer,
+  setVolumeScale
 } from './visualizer.js';
 
 const EPOCH = 1700000000000;
@@ -39,6 +40,7 @@ hudHint.textContent = isTouchDevice
   : 'Hold Q to switch Radio  ·  Scroll to adjust volume';
 
 hudVolume.textContent = `Volume: ${getVolume()}%`;
+setVolumeScale(getVolume() / 100);
 
 let volumeHideTimeout: ReturnType<typeof setTimeout> | null = null;
 
@@ -47,6 +49,7 @@ document.addEventListener(
   (e) => {
     const next = getVolume() - Math.sign(e.deltaY) * 5;
     setVolume(next);
+    setVolumeScale(getVolume() / 100);
     hudVolume.textContent = `Volume: ${getVolume()}%`;
     hudVolume.classList.add('visible');
     if (volumeHideTimeout !== null) clearTimeout(volumeHideTimeout);
@@ -90,6 +93,7 @@ document.addEventListener(
     // Map ~200px of travel to full 0-100 range
     const volumeDelta = Math.round(deltaY / 2);
     setVolume(volumeAtGestureStart + volumeDelta);
+    setVolumeScale(getVolume() / 100);
     hudVolume.textContent = `Volume: ${getVolume()}%`;
     hudVolume.classList.add('visible');
     if (volumeHideTimeout !== null) clearTimeout(volumeHideTimeout);
