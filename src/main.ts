@@ -8,7 +8,8 @@ import {
   setVolume,
   getVolume,
   onStationEnded,
-  onStationPlaying
+  onStationPlaying,
+  onStationError
 } from './player.js';
 import {
   start as startVisualizer,
@@ -118,9 +119,19 @@ let pendingTitle: string | null = null;
 
 onStationPlaying(() => {
   if (pendingTitle !== null) {
+    hudStation.classList.remove('error');
     hudStation.textContent = pendingTitle;
     pendingTitle = null;
     startVisualizer();
+  }
+});
+
+onStationError(() => {
+  if (pendingTitle !== null) {
+    hudStation.textContent = 'Playback Failed';
+    hudStation.classList.add('error');
+    pendingTitle = null;
+    stopVisualizer();
   }
 });
 
@@ -134,6 +145,7 @@ menu.addEventListener('activate', (e) => {
       ? ((Date.now() - EPOCH) % (station.duration * 60 * 1000)) / 1000
       : 0;
     pendingTitle = title;
+    hudStation.classList.remove('error');
     hudStation.textContent = 'Loading...';
     stopVisualizer();
     play(url, offset);

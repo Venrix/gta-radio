@@ -57,6 +57,21 @@ body {
   background-color: rgba(255, 255, 255, 0.1);
 }
 
+#hud-station.error {
+  color: #ff6b6b;
+  animation: error-pulse 2s ease-in-out infinite;
+}
+
+@keyframes error-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
 #hud-hint {
   color: rgba(255, 255, 255, 0.5);
   font-size: 0.75rem;

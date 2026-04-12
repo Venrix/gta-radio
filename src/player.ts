@@ -29,6 +29,7 @@ let currentUrl: string | null = null;
 let volume = Number(localStorage.getItem('volume') ?? 50);
 let endedCallback: ((url: string) => void) | null = null;
 let playingCallback: (() => void) | null = null;
+let errorCallback: (() => void) | null = null;
 
 export function onStationEnded(cb: (url: string) => void): void {
   endedCallback = cb;
@@ -36,6 +37,10 @@ export function onStationEnded(cb: (url: string) => void): void {
 
 export function onStationPlaying(cb: () => void): void {
   playingCallback = cb;
+}
+
+export function onStationError(cb: () => void): void {
+  errorCallback = cb;
 }
 
 export function extractVideoId(url: string): string | null {
@@ -63,6 +68,9 @@ const playerReady = new Promise<YT.Player>((resolve) => {
           if (data === YT.PlayerState.ENDED && currentUrl) {
             endedCallback?.(currentUrl);
           }
+        },
+        onError: () => {
+          errorCallback?.();
         }
       }
     });
@@ -71,7 +79,14 @@ const playerReady = new Promise<YT.Player>((resolve) => {
 
 const script = document.createElement('script');
 script.src = 'https://www.youtube.com/iframe_api';
+script.addEventListener('error', () => errorCallback?.());
 document.head.appendChild(script);
+
+// If the YouTube API never loads (e.g. blocked by VPN/firewall),
+// fire the error callback so the UI doesn't stay on "Loading..." forever.
+setTimeout(() => {
+  if (!player) errorCallback?.();
+}, 10000);
 
 export async function play(url: string, startSeconds?: number): Promise<void> {
   const videoId = extractVideoId(url);
