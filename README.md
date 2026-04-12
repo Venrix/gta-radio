@@ -10,9 +10,7 @@ A browser-based GTA radio player. Each station is a YouTube video playing throug
 - Radial wheel UI modeled after the GTA radio wheel
 - Clock-synced playback: all clients independently calculate the current offset from a shared epoch
 - Stations auto-loop when the video ends
-- 80-bar circular visualizer on a fullscreen canvas
 - Volume control via scroll wheel, persisted in `localStorage`
-- Mobile support via long-press
 
 ## How sync works
 
