@@ -1,5 +1,9 @@
 const blipUrls = Object.values(
-  import.meta.glob('./assets/sounds/radio_blip_*.wav', { eager: true, query: '?url', import: 'default' })
+  import.meta.glob('./assets/sounds/radio_blip_*.wav', {
+    eager: true,
+    query: '?url',
+    import: 'default'
+  })
 ) as string[];
 
 function playRandomBlip(): Promise<void> {
@@ -59,8 +63,8 @@ const playerReady = new Promise<YT.Player>((resolve) => {
           if (data === YT.PlayerState.ENDED && currentUrl) {
             endedCallback?.(currentUrl);
           }
-        },
-      },
+        }
+      }
     });
   };
 });

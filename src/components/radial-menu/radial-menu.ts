@@ -113,13 +113,17 @@ export class RadialMenu extends HTMLElement {
       selectionSound.currentTime = 0;
       selectionSound.play();
 
-      const delay = items[nearestIndex].hasAttribute('data-radio-off') ? 0 : 2000;
+      const delay = items[nearestIndex].hasAttribute('data-radio-off')
+        ? 0
+        : 2000;
       this.#activateTimeout = setTimeout(() => {
         this.#activateTimeout = null;
-        this.dispatchEvent(new CustomEvent('activate', {
-          detail: { element: items[nearestIndex] },
-          bubbles: true,
-        }));
+        this.dispatchEvent(
+          new CustomEvent('activate', {
+            detail: { element: items[nearestIndex] },
+            bubbles: true
+          })
+        );
       }, delay);
     }, this.#hoverDelay);
   };
@@ -130,14 +134,18 @@ export class RadialMenu extends HTMLElement {
     if (n === 0) return;
 
     const containerSize = Math.min(this.clientWidth, this.clientHeight);
-    const fontSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
+    const fontSize = parseFloat(
+      getComputedStyle(document.documentElement).fontSize
+    );
     const buttonSize = 5 * fontSize; // matches 5rem in radial-button.css
     const minRadius = (buttonSize * 1.1) / (2 * Math.sin(Math.PI / n));
     const radius = Math.min(containerSize * 0.45, minRadius);
     const cx = this.clientWidth / 2;
     const cy = this.clientHeight / 2;
 
-    const radioOffIndex = items.findIndex(el => el.hasAttribute('data-radio-off'));
+    const radioOffIndex = items.findIndex((el) =>
+      el.hasAttribute('data-radio-off')
+    );
     const step = (2 * Math.PI) / n;
     let regularCounter = 0;
 

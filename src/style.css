@@ -15,7 +15,9 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  font: 400 1rem/1.5 'Inter Variable', sans-serif;
+  font:
+    400 1rem/1.5 'Inter Variable',
+    sans-serif;
   position: relative;
   overflow: hidden;
   background-image: url('./assets/background/bg.jpg');

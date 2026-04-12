@@ -12,11 +12,11 @@
 
 :host(:hover) {
   opacity: 85%;
-  outline: 1px solid #296FBD;
+  outline: 1px solid #296fbd;
 }
 
 :host([selected]) {
-  box-shadow: 0 0 0 4px #296FBD;
+  box-shadow: 0 0 0 4px #296fbd;
   opacity: 100%;
 }
 

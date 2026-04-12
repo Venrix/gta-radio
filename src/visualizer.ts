@@ -69,30 +69,26 @@ function kick(t: number, bpm: number): number {
 
 function beatEnvelope(t: number): number {
   return (
-    kick(t, 100) * 0.30 +
+    kick(t, 100) * 0.3 +
     kick(t + 0.13, 128) * 0.25 +
-    kick(t + 0.07, 87) * 0.20 +
-    kick(t + 0.31, 140) * 0.10
+    kick(t + 0.07, 87) * 0.2 +
+    kick(t + 0.31, 140) * 0.1
   );
 }
 
 function getBarValue(i: number, t: number): number {
   const p = i / NUM_BARS;
 
-  const n =
-    fbm(p * 4.0 + t * 0.8, 4) * 0.25 +
-    fbm(p * 8.0 - t * 0.5, 3) * 0.15;
+  const n = fbm(p * 4.0 + t * 0.8, 4) * 0.25 + fbm(p * 8.0 - t * 0.5, 3) * 0.15;
 
-  const bass = Math.exp(-p * 4) * 0.20;
+  const bass = Math.exp(-p * 4) * 0.2;
 
   const beat = beatEnvelope(t) * (0.18 + bass * 0.5);
 
   const treble =
-    p > 0.5
-      ? Math.abs(noise1d(p * 20 + t * 2.5)) * 0.10 * (p - 0.5) * 2
-      : 0;
+    p > 0.5 ? Math.abs(noise1d(p * 20 + t * 2.5)) * 0.1 * (p - 0.5) * 2 : 0;
 
-  const raw = 0.30 + n + bass + beat + treble;
+  const raw = 0.3 + n + bass + beat + treble;
   return Math.max(0, Math.min(1, raw));
 }
 
@@ -110,7 +106,7 @@ function draw(ts: number) {
     const cy = h / 2;
     const minDim = Math.min(w, h);
     const innerR = minDim * VISUALIZER_RADIUS;
-    const maxBarLen = minDim * 0.10;
+    const maxBarLen = minDim * 0.1;
 
     for (let i = 0; i < NUM_BARS; i++) {
       const angle = (i / NUM_BARS) * Math.PI * 2 - Math.PI / 2;

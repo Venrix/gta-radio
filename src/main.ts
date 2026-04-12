@@ -2,7 +2,14 @@ import './style.css';
 import './components/radial-menu/radial-menu.js';
 import './components/radial-button/radial-button.js';
 import { stations } from './stations.js';
-import { play, stop, setVolume, getVolume, onStationEnded, onStationPlaying } from './player.js';
+import {
+  play,
+  stop,
+  setVolume,
+  getVolume,
+  onStationEnded,
+  onStationPlaying
+} from './player.js';
 import {
   start as startVisualizer,
   stop as stopVisualizer
@@ -61,35 +68,47 @@ function avgTouchY(touches: TouchList): number {
   return sum / touches.length;
 }
 
-document.addEventListener('touchstart', (e) => {
-  if (e.touches.length === 2) {
-    twoFingerStartY = avgTouchY(e.touches);
-    volumeAtGestureStart = getVolume();
+document.addEventListener(
+  'touchstart',
+  (e) => {
+    if (e.touches.length === 2) {
+      twoFingerStartY = avgTouchY(e.touches);
+      volumeAtGestureStart = getVolume();
+      hudVolume.classList.add('visible');
+      if (volumeHideTimeout !== null) clearTimeout(volumeHideTimeout);
+    }
+  },
+  { passive: true }
+);
+
+document.addEventListener(
+  'touchmove',
+  (e) => {
+    if (e.touches.length !== 2 || twoFingerStartY === null) return;
+    // Swipe up = louder, swipe down = quieter
+    const deltaY = twoFingerStartY - avgTouchY(e.touches);
+    // Map ~200px of travel to full 0-100 range
+    const volumeDelta = Math.round(deltaY / 2);
+    setVolume(volumeAtGestureStart + volumeDelta);
+    hudVolume.textContent = `Volume: ${getVolume()}%`;
     hudVolume.classList.add('visible');
     if (volumeHideTimeout !== null) clearTimeout(volumeHideTimeout);
-  }
-}, { passive: true });
+  },
+  { passive: true }
+);
 
-document.addEventListener('touchmove', (e) => {
-  if (e.touches.length !== 2 || twoFingerStartY === null) return;
-  // Swipe up = louder, swipe down = quieter
-  const deltaY = twoFingerStartY - avgTouchY(e.touches);
-  // Map ~200px of travel to full 0-100 range
-  const volumeDelta = Math.round(deltaY / 2);
-  setVolume(volumeAtGestureStart + volumeDelta);
-  hudVolume.textContent = `Volume: ${getVolume()}%`;
-  hudVolume.classList.add('visible');
-  if (volumeHideTimeout !== null) clearTimeout(volumeHideTimeout);
-}, { passive: true });
-
-document.addEventListener('touchend', () => {
-  if (twoFingerStartY === null) return;
-  twoFingerStartY = null;
-  volumeHideTimeout = setTimeout(() => {
-    hudVolume.classList.remove('visible');
-    volumeHideTimeout = null;
-  }, 1500);
-}, { passive: true });
+document.addEventListener(
+  'touchend',
+  () => {
+    if (twoFingerStartY === null) return;
+    twoFingerStartY = null;
+    volumeHideTimeout = setTimeout(() => {
+      hudVolume.classList.remove('visible');
+      volumeHideTimeout = null;
+    }, 1500);
+  },
+  { passive: true }
+);
 
 let pendingTitle: string | null = null;
 
@@ -107,7 +126,9 @@ menu.addEventListener('activate', (e) => {
   const title = el.getAttribute('title') ?? 'Unknown';
   if (url) {
     const station = stations.find((s) => s.url === url);
-    const offset = station ? ((Date.now() - EPOCH) % (station.duration * 60 * 1000)) / 1000 : 0;
+    const offset = station
+      ? ((Date.now() - EPOCH) % (station.duration * 60 * 1000)) / 1000
+      : 0;
     pendingTitle = title;
     hudStation.textContent = 'Loading...';
     stopVisualizer();
@@ -165,13 +186,16 @@ if (!DEBUG) {
     btn.addEventListener('click', () => {
       if (menu.getAttribute('mode') !== 'click') return;
       // Highlight the tapped button
-      for (const b of menu.querySelectorAll('radial-button')) b.removeAttribute('selected');
+      for (const b of menu.querySelectorAll('radial-button'))
+        b.removeAttribute('selected');
       btn.setAttribute('selected', '');
       // Fire activation
-      menu.dispatchEvent(new CustomEvent('activate', {
-        detail: { element: btn },
-        bubbles: true,
-      }));
+      menu.dispatchEvent(
+        new CustomEvent('activate', {
+          detail: { element: btn },
+          bubbles: true
+        })
+      );
     });
   }
 }
