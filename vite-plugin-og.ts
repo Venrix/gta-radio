@@ -64,9 +64,9 @@ export default function ogPlugin(): Plugin {
       const ogDir = resolve(distDir, 'og');
       mkdirSync(ogDir, { recursive: true });
 
-      // Use background image as the default OG image for the root page
+      // Use icon as the default OG image for the root page
       copyFileSync(
-        resolve(config.root, 'src/assets/background/bg.jpg'),
+        resolve(config.root, 'src/assets/icon/icon.jpg'),
         resolve(ogDir, 'default.jpg')
       );
 
