@@ -5,7 +5,7 @@ const iconModules = import.meta.glob('./assets/station_icons/*.jpg', {
 }) as Record<string, string>;
 
 export interface Station {
-  guid: string;
+  id: string;
   title: string;
   icon: string;
   url: string;
@@ -15,7 +15,7 @@ export interface Station {
 
 export const stations: Station[] = [
   {
-    guid: '94ab8125-45fd-462d-b801-5762b4c438bd',
+    id: 'blue_ark',
     title: 'Blue Ark',
     icon: '/assets/station_icons/blue_ark.jpg',
     duration: 135.57,
@@ -23,7 +23,7 @@ export const stations: Station[] = [
     disabled: false
   },
   {
-    guid: 'd9e5a65c-10c3-431d-af60-24f0398f2a8c',
+    id: 'music_locker_radio',
     title: 'Music Locker Radio',
     icon: '/assets/station_icons/music_locker_radio.jpg',
     duration: 454.1,
@@ -31,7 +31,7 @@ export const stations: Station[] = [
     disabled: false
   },
   {
-    guid: '3892e453-c63d-4be7-b6de-4d619b73930e',
+    id: 'worldwide_fm',
     title: 'Worldwide FM',
     icon: '/assets/station_icons/worldwide_fm.jpg',
     duration: 307.72,
@@ -39,7 +39,7 @@ export const stations: Station[] = [
     disabled: false
   },
   {
-    guid: '07d30465-ab4b-4545-b85f-e0559680f456',
+    id: 'flylo_fm',
     title: 'FlyLo FM',
     icon: '/assets/station_icons/flylo_fm.jpg',
     duration: 129.5,
@@ -47,7 +47,7 @@ export const stations: Station[] = [
     disabled: false
   },
   {
-    guid: 'a8211136-bf66-4ef9-a823-6905616fc459',
+    id: 'the_lowdown_91.1',
     title: 'The Lowdown 91.1',
     icon: '/assets/station_icons/the_lowdown_91.1.jpg',
     duration: 142.33,
@@ -55,7 +55,7 @@ export const stations: Station[] = [
     disabled: false
   },
   {
-    guid: '43886cc2-c7ef-4810-86db-0040df2f1d00',
+    id: 'the_lab',
     title: 'The Lab',
     icon: '/assets/station_icons/the_lab.jpg',
     duration: 57.62,
@@ -63,7 +63,7 @@ export const stations: Station[] = [
     disabled: false
   },
   {
-    guid: '9ed85702-f447-43f2-95ab-a7c9e782d428',
+    id: 'radio_mirror_park',
     title: 'Radio Mirror Park',
     icon: '/assets/station_icons/radio_mirror_park.jpg',
     duration: 212.9,
@@ -71,7 +71,7 @@ export const stations: Station[] = [
     disabled: false
   },
   {
-    guid: '69742d94-aac0-4c3a-bae3-3f101c38b6ec',
+    id: 'kult_fm',
     title: 'Kult FM',
     icon: '/assets/station_icons/kult_fm.jpg',
     duration: 140.2,
@@ -79,7 +79,7 @@ export const stations: Station[] = [
     disabled: false
   },
   {
-    guid: 'b3050110-68de-4f5b-acd6-07cce7267e3c',
+    id: 'space_103.2',
     title: 'Space 103.2',
     icon: '/assets/station_icons/space_103.2.jpg',
     duration: 188.32,
@@ -87,7 +87,7 @@ export const stations: Station[] = [
     disabled: false
   },
   {
-    guid: '1a555634-8130-4acd-bf8f-fda261789b79',
+    id: 'vinewood_boulevard_radio',
     title: 'Vinewood Boulevard Radio',
     icon: '/assets/station_icons/vinewood_boulevard_radio.jpg',
     duration: 92.28,
@@ -95,7 +95,7 @@ export const stations: Station[] = [
     disabled: false
   },
   {
-    guid: '0e7e0e80-f95d-45f3-b20b-b3f75d3ca61e',
+    id: 'blonded_los_santos_97.8_fm',
     title: 'blonded Los Santos 97.8 FM',
     icon: '/assets/station_icons/blonded_los_santos_97.8_fm.jpg',
     duration: 102.33,
@@ -103,7 +103,7 @@ export const stations: Station[] = [
     disabled: false
   },
   {
-    guid: '2b1d77a8-f6d7-499e-9dc9-497247ebae30',
+    id: 'los_santos_underground_radio',
     title: 'Los Santos Underground Radio',
     icon: '/assets/station_icons/los_santos_underground_radio.jpg',
     duration: 278.92,
@@ -111,7 +111,7 @@ export const stations: Station[] = [
     disabled: false
   },
   {
-    guid: 'a453d7f1-f2f8-41b4-8db0-728e9e6e1048',
+    id: 'ifruit_radio',
     title: 'iFruit Radio',
     icon: '/assets/station_icons/ifruit_radio.jpg',
     duration: 86.7,
@@ -119,7 +119,7 @@ export const stations: Station[] = [
     disabled: false
   },
   {
-    guid: 'ca6a1797-e00f-4732-afde-5be57ebbf5a8',
+    id: 'still_slipping_los_santos',
     title: 'Still Slipping Los Santos',
     icon: '/assets/station_icons/still_slipping_los_santos.jpg',
     duration: 72.75,
@@ -127,7 +127,7 @@ export const stations: Station[] = [
     disabled: false
   },
   {
-    guid: '1f84a498-f3bb-45d0-bf32-2b3addc8c8d5',
+    id: 'los_santos_rock_radio',
     title: 'Los Santos Rock Radio',
     icon: '/assets/station_icons/los_santos_rock_radio.jpg',
     duration: 287.35,
@@ -135,7 +135,7 @@ export const stations: Station[] = [
     disabled: false
   },
   {
-    guid: 'ff2278cb-d9ad-4a5c-bd63-bd72c2d9ba15',
+    id: 'non-stop-pop_fm',
     title: 'Non-Stop-Pop FM',
     icon: '/assets/station_icons/non-stop-pop_fm.jpg',
     duration: 231.32,
@@ -143,7 +143,7 @@ export const stations: Station[] = [
     disabled: false
   },
   {
-    guid: '7af7f4db-e0a9-45b8-b2d4-b341ec48e50c',
+    id: 'radio_los_santos',
     title: 'Radio Los Santos',
     icon: '/assets/station_icons/radio_los_santos.jpg',
     duration: 356.42,
@@ -151,7 +151,7 @@ export const stations: Station[] = [
     disabled: false
   },
   {
-    guid: '25ec58c3-2a61-4ee7-9d62-845afe68f332',
+    id: 'channel_x',
     title: 'Channel X',
     icon: '/assets/station_icons/channel_x.jpg',
     duration: 91.83,
@@ -159,7 +159,7 @@ export const stations: Station[] = [
     disabled: false
   },
   {
-    guid: '709ecf73-ce50-4e2f-b0fc-1fd355f5259e',
+    id: 'rebel_radio',
     title: 'Rebel Radio',
     icon: '/assets/station_icons/rebel_radio.jpg',
     duration: 82.65,
@@ -167,7 +167,7 @@ export const stations: Station[] = [
     disabled: false
   },
   {
-    guid: '59afda50-2163-416e-a452-5c34408a2cc4',
+    id: 'soulwax_fm',
     title: 'Soulwax FM',
     icon: '/assets/station_icons/soulwax_fm.jpg',
     duration: 54.33,
@@ -175,7 +175,7 @@ export const stations: Station[] = [
     disabled: false
   },
   {
-    guid: '99f92efd-9fa9-44ce-a8d9-5fc24416eb99',
+    id: 'east_los_fm',
     title: 'East Los FM',
     icon: '/assets/station_icons/east_los_fm.jpg',
     duration: 45.05,
@@ -183,7 +183,7 @@ export const stations: Station[] = [
     disabled: false
   },
   {
-    guid: 'e7a4f1b5-d26e-4b77-a6ab-e0b37b33c54f',
+    id: 'west_coast_classics',
     title: 'West Coast Classics',
     icon: '/assets/station_icons/west_coast_classics.jpg',
     duration: 258.55,
@@ -191,7 +191,7 @@ export const stations: Station[] = [
     disabled: false
   },
   {
-    guid: '9af0cc1d-61d9-4f94-b5fe-c8ea2575d5e4',
+    id: 'media_player',
     title: 'Media Player',
     icon: '/assets/station_icons/media_player.jpg',
     duration: 416,
@@ -199,7 +199,7 @@ export const stations: Station[] = [
     disabled: false
   },
   {
-    guid: '6a8a3ba8-d099-4f96-a1f0-0f4b712f1736',
+    id: 'motomami_los_santos',
     title: 'MOTOMAMI Los Santos',
     icon: '/assets/station_icons/motomami_los_santos.jpg',
     duration: 196,
@@ -207,7 +207,7 @@ export const stations: Station[] = [
     disabled: false
   },
   {
-    guid: 'd9e5a65c-10c3-431d-af60-24f0398f2a8c',
+    id: 'blaine_county_talk_radio',
     title: 'Blaine County Talk Radio',
     icon: '/assets/station_icons/blaine_county_talk_radio.jpg',
     duration: 0,
@@ -215,7 +215,7 @@ export const stations: Station[] = [
     disabled: true
   },
   {
-    guid: '3892e453-c63d-4be7-b6de-4d619b73930e',
+    id: 'self_radio',
     title: 'Self Radio',
     icon: '/assets/station_icons/self_radio.jpg',
     duration: 0,
@@ -223,7 +223,7 @@ export const stations: Station[] = [
     disabled: true
   },
   {
-    guid: '07d30465-ab4b-4545-b85f-e0559680f456',
+    id: 'west_coast_talk_radio',
     title: 'West Coast Talk Radio',
     icon: '/assets/station_icons/west_coast_talk_radio.jpg',
     duration: 0,
