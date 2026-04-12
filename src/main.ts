@@ -245,6 +245,11 @@ const initialStation = initialId
 if (initialStation) {
   hudStation.textContent = initialStation.title;
   hudHint.textContent = 'Click anywhere to start listening';
+  const btn = menu.querySelector(`radial-button[data-id="${initialStation.id}"]`);
+  if (btn) {
+    menu.querySelector('radial-button[selected]')?.removeAttribute('selected');
+    btn.setAttribute('selected', '');
+  }
   const overlay = document.createElement('div');
   overlay.id = 'click-to-play';
   document.body.appendChild(overlay);
