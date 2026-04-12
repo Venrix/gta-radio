@@ -44,6 +44,7 @@ export class RadialMenu extends HTMLElement {
       const radioOff = document.createElement('radial-button');
       radioOff.setAttribute('title', 'Radio Off');
       radioOff.setAttribute('data-radio-off', '');
+      radioOff.setAttribute('selected', '');
       this.appendChild(radioOff);
     }
     this.#slot.addEventListener('slotchange', this.#arrange);
