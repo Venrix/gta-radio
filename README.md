@@ -2,7 +2,7 @@
 
 **Live at [radio.rreinhardt.dev](https://radio.rreinhardt.dev/)**
 
-A browser-based GTA radio player. Each station is a YouTube video playing through a hidden iframe. Hold Q (or long-press on mobile) to open the radial wheel, hover over a station, and it tunes in. All clients are synced so listeners all hear the same position in the broadcast.
+A browser-based GTA radio player. Each station is a YouTube video playing through a hidden iframe. Hold Q (or tap the current station name) to open the radial wheel, select station, and it tunes in. All clients are synced so listeners all hear the same position in the broadcast.
 
 ## Features
 
