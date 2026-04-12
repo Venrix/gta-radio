@@ -138,11 +138,11 @@ onStationError(() => {
 });
 
 function playStation(station: (typeof stations)[number]): void {
-  const offset =
-    ((Date.now() - EPOCH) % (station.duration * 60 * 1000)) / 1000;
+  const offset = ((Date.now() - EPOCH) % (station.duration * 60 * 1000)) / 1000;
   pendingTitle = station.title;
   hudStation.classList.remove('error');
   hudStation.textContent = 'Loading...';
+  document.title = `${station.title} — GTA Radio`;
   stopVisualizer();
   play(station.url, offset);
 }
@@ -152,6 +152,7 @@ function stopStation(): void {
   stop();
   stopVisualizer();
   hudStation.textContent = 'No Station';
+  document.title = 'GTA Radio';
 }
 
 menu.addEventListener('activate', (e) => {
@@ -244,7 +245,9 @@ const initialStation = initialId
 if (initialStation) {
   hudStation.textContent = initialStation.title;
   hudHint.textContent = 'Click anywhere to start listening';
-  const btn = menu.querySelector(`radial-button[data-id="${initialStation.id}"]`);
+  const btn = menu.querySelector(
+    `radial-button[data-id="${initialStation.id}"]`
+  );
   if (btn) {
     menu.querySelector('radial-button[selected]')?.removeAttribute('selected');
     btn.setAttribute('selected', '');
