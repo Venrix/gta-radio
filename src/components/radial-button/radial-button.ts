@@ -24,8 +24,6 @@ export class RadialButton extends HTMLElement {
     this.#loadIcon(this.getAttribute('icon'));
   }
 
-  disconnectedCallback(): void {}
-
   attributeChangedCallback(
     name: string,
     _old: string | null,

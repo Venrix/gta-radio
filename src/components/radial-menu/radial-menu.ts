@@ -8,8 +8,6 @@ styles.replaceSync(sheet);
 const selectionSound = new Audio(selectionUrl);
 
 export class RadialMenu extends HTMLElement {
-  static observedAttributes: string[] = [];
-
   readonly #shadow: ShadowRoot;
 
   readonly #slot: HTMLSlotElement;
@@ -170,12 +168,6 @@ export class RadialMenu extends HTMLElement {
       return angle;
     });
   };
-
-  attributeChangedCallback(
-    _name: string,
-    _old: string | null,
-    _next: string | null
-  ): void {}
 }
 
 customElements.define('radial-menu', RadialMenu);

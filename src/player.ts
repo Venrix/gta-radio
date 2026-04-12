@@ -44,7 +44,7 @@ export function onStationError(cb: () => void): void {
   errorCallback = cb;
 }
 
-export function extractVideoId(url: string): string | null {
+function extractVideoId(url: string): string | null {
   const match = url.match(/[?&]v=([^&]+)/);
   return match ? match[1] : null;
 }
