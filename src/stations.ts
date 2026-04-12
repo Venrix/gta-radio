@@ -23,7 +23,7 @@ export const stations: Station[] = [
     disabled: false
   },
   {
-    id: 'music_locker_radio',
+    id: 'music_locker',
     title: 'Music Locker Radio',
     icon: '/assets/station_icons/music_locker_radio.jpg',
     duration: 454.1,
@@ -47,7 +47,7 @@ export const stations: Station[] = [
     disabled: false
   },
   {
-    id: 'the_lowdown_91.1',
+    id: 'the_lowdown',
     title: 'The Lowdown 91.1',
     icon: '/assets/station_icons/the_lowdown_91.1.jpg',
     duration: 142.33,
@@ -119,7 +119,7 @@ export const stations: Station[] = [
     disabled: false
   },
   {
-    id: 'still_slipping_los_santos',
+    id: 'still_slipping',
     title: 'Still Slipping Los Santos',
     icon: '/assets/station_icons/still_slipping_los_santos.jpg',
     duration: 72.75,
@@ -135,7 +135,7 @@ export const stations: Station[] = [
     disabled: false
   },
   {
-    id: 'non-stop-pop_fm',
+    id: 'non-stop-pop',
     title: 'Non-Stop-Pop FM',
     icon: '/assets/station_icons/non-stop-pop_fm.jpg',
     duration: 231.32,
@@ -199,7 +199,7 @@ export const stations: Station[] = [
     disabled: false
   },
   {
-    id: 'motomami_los_santos',
+    id: 'motomami',
     title: 'MOTOMAMI Los Santos',
     icon: '/assets/station_icons/motomami_los_santos.jpg',
     duration: 196,
