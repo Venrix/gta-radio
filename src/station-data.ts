@@ -89,7 +89,7 @@ export const stationData: StationData[] = [
     disabled: false
   },
   {
-    id: 'blonded_los_santos_97.8_fm',
+    id: 'blonded_los_santos',
     title: 'blonded Los Santos 97.8 FM',
     iconFile: 'blonded_los_santos_97.8_fm.jpg',
     duration: 102.33,
